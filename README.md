@@ -17,6 +17,3 @@
    - Safety status indicators
 9. **Troubleshooting**
    - Common issues and fixes
-10. **Screenshots**
-    1.  Dashboard running locally (showing live data)
-    2.  Dashboard deployed on Azure App Service
