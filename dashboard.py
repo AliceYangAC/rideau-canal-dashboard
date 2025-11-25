@@ -23,18 +23,27 @@ load_dotenv(dotenv_path=os.path.join(BASE_DIR, ".env"))
 locations = ["Dow's Lake", "Fifth Avenue", "NAC"]
 
 # ---------------------------------
-# Azure Cosmos DB Setup
-COSMOS_CONN_STR = os.getenv("COSMOS_CONN_STR")
+# Azure Cosmos DB Setup & Blob Storage Setup
+COSMOS_URL = os.getenv("COSMOS_CONN_STR")
 COSMOS_KEY = os.getenv("COSMOS_KEY")
 DATABASE_NAME = "RideauCanalDB"
 CONTAINER_NAME = "SensorAggregations"
 
-cosmos_client = CosmosClient(COSMOS_CONN_STR, COSMOS_KEY)
-database = cosmos_client.get_database_client(DATABASE_NAME)
-container = database.get_container_client(CONTAINER_NAME)
+BLOB_CONN_STR = os.getenv("BLOB_CONN_STR")
+BLOB_CONTAINER = "historical-data"
+
+def get_cosmos_container():
+    client = CosmosClient(COSMOS_URL, COSMOS_KEY)
+    db = client.get_database_client(DATABASE_NAME)
+    return db.get_container_client(CONTAINER_NAME)
+
+def get_blob_container():
+    service = BlobServiceClient.from_connection_string(BLOB_CONN_STR)
+    return service.get_container_client(BLOB_CONTAINER)
 
 # Function to get latest aggregated status for a location from Cosmos DB
 def get_latest_status(location: str, minutes: int = 60):
+    container = get_cosmos_container()
     now = datetime.datetime.now(datetime.timezone.utc)
     start_time, end_time = (
         (now - datetime.timedelta(minutes=minutes)).strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -73,15 +82,8 @@ def get_latest_status(location: str, minutes: int = 60):
     ))
     return items[0] if items else None
 
-#---------------------------------
-# Azure Blob Storage Setup
-BLOB_CONN_STR = os.getenv("BLOB_CONN_STR")
-BLOB_CONTAINER = "historical-data"
-
-blob_service = BlobServiceClient.from_connection_string(BLOB_CONN_STR)
-blob_container = blob_service.get_container_client(BLOB_CONTAINER)
-
 def get_historical_data(last_minutes=60):
+    blob_container = get_blob_container()
     now = datetime.datetime.now(datetime.timezone.utc)
     prefix = f"aggregations/{now.year}/{now.month:02d}/{now.day:02d}/{now.hour:02d}/"
     blobs = blob_container.list_blobs(name_starts_with=prefix)
