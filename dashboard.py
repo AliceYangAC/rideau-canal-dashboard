@@ -104,6 +104,9 @@ def get_historical_data(last_minutes=60):
 # Dash App Setup
 app = dash.Dash(__name__)
 
+# Add server for deployment
+server = app.server 
+
 # Used AI to enhance the dashboard's visual design and user experience.
 app.layout = html.Div(
     className="app-container",
@@ -243,8 +246,6 @@ def update_countdown(countdown_ticks, refresh_ticks):
     seconds_since_refresh = countdown_ticks % 30
     remaining = 30 - seconds_since_refresh
     return f"Next refresh in {remaining} seconds"
-
-# server = app.server 
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8050)))
