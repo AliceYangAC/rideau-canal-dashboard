@@ -1,7 +1,8 @@
 dash
-dotenv
-azure-cosmos
-azure-storage-blob
+flask
+gunicorn
 plotly
 pandas
-gunicorn
+python-dotenv
+azure-cosmos
+azure-storage-blob
