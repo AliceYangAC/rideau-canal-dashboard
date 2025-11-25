@@ -108,6 +108,7 @@ app = dash.Dash(__name__)
 
 # Add server for deployment
 server = app.server 
+application = server
 
 # Used AI to enhance the dashboard's visual design and user experience.
 app.layout = html.Div(
