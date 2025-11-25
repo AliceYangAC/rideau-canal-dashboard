@@ -1,2 +1,7 @@
 dash
-flask
+dotenv
+azure-cosmos
+azure-storage-blob
+plotly
+pandas
+gunicorn

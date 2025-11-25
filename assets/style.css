@@ -1,0 +1,129 @@
+/* General app container */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Courier New', monospace;
+  background-color: #fafafa;
+  padding: 30px;
+}
+
+/* Title */
+.dashboard-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: normal;
+  letter-spacing: 2px;
+}
+
+/* Countdown display */
+.countdown-display {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #666;
+  border: 1px dashed #aaa;
+  padding: 5px 15px;
+  border-radius: 50px;
+  background-color: #f0f0f0;
+}
+
+/* Location cards row */
+.location-cards {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+/* System status */
+.system-status {
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 30px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  background-color: #444;
+  color: #fdfdfd;
+  text-align: center;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+  white-space: pre-line; /* allows \n line breaks */
+}
+
+/* Trend charts container */
+.trend-charts {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+/* Graph styling */
+.trend-graph {
+  width: 42vw;
+  height: 45vh;
+  background-color: #fdfdfd;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+/* Individual location card */
+.lofi-card {
+  border: 1px dashed #aaa;
+  background-color: #fdfdfd;
+  padding: 15px;
+  width: 280px;
+  border-radius: 8px;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.05);
+  margin: 10px;
+  transition: transform 0.2s ease-in-out;
+}
+.lofi-card:hover {
+  transform: scale(1.02);
+}
+
+/* Card title */
+.card-title {
+  margin-bottom: 10px;
+  font-family: 'Courier New', monospace;
+  color: #333;
+  font-weight: normal;
+}
+
+/* Card timestamp */
+.card-timestamp {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-family: 'Courier New', monospace;
+  color: #666;
+  font-size: 13px;
+  font-weight: normal;
+}
+
+/* Status badge */
+.status-badge {
+  color: white;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-family: 'Courier New', monospace;
+}
+
+/* List styling */
+.card-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 10px;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+}
+.card-list li {
+  padding: 4px 0;
+  border-bottom: 1px dashed #ddd;
+  color: #444;
+}
+.card-list li:last-child {
+  border-bottom: none;
+}
