@@ -81,7 +81,87 @@ If not handled in step 5 of "Deploy Web App":
 2. **Settings -> Environment Variables -> Import.env -> Save**
 
 ## Dashboard Features  
-
+```ascii
++---------------------------------------------------+
+|                 Start (app.py)                    |
++---------------------------------------------------+
+                          |
+                          v
++---------------------------------------------------+
+| Load environment variables (.env)                 |
+|  - COSMOS_CONN_STR, COSMOS_KEY, BLOB_CONN_STR     |
++---------------------------------------------------+
+                          |
+                          v
++---------------------------------------------------+
+| Define locations: ["Dow's Lake","Fifth Avenue","NAC"] |
++---------------------------------------------------+
+                          |
+                          v
++---------------------------------------------------+
+| Setup Azure clients                               |
+|  - get_cosmos_container()                         |
+|  - get_blob_container()                           |
++---------------------------------------------------+
+                          |
+                          v
++---------------------------------------------------+
+| Dash App Initialization                           |
+|  - app = dash.Dash(__name__)                      |
+|  - server = app.server                            |
+|  - Layout:                                        |
+|     • Countdown display                           |
+|     • Location cards                              |
+|     • System status                               |
+|     • Trend charts (ice thickness, surface temp)  |
++---------------------------------------------------+
+                          |
+                          v
++---------------------------------------------------+
+| Interval triggers (every 30s)                     |
+|  -> update_dashboard() callback                   |
++---------------------------------------------------+
+                          |
+                          v
++---------------------------------------------------+
+| update_dashboard():                               |
+|  For each location:                               |
+|   - Query Cosmos DB (get_latest_status)           |
+|   - Compute safety status (Safe/Caution/Unsafe)   |
+|   - Build location card with metrics + badge      |
+|                                                   |
+|  Retrieve historical data (get_historical_data)   |
+|   - Read blobs from Blob Storage                  |
+|   - Build line charts with Plotly Express         |
+|                                                   |
+|  Determine overall system status                  |
+|   - SAFE if all locations safe                    |
+|   - Otherwise UNSAFE with problem locations       |
++---------------------------------------------------+
+                          |
+                          v
++---------------------------------------------------+
+| Return updated components to Dash:                |
+|  - Location cards                                 |
+|  - Ice thickness trend chart                      |
+|  - Surface temperature trend chart                |
+|  - System status                                  |
++---------------------------------------------------+
+                          |
+                          v
++---------------------------------------------------+
+| Countdown interval (every 1s)                     |
+|  -> update_countdown() callback                   |
+|  - Computes seconds remaining until next refresh  |
+|  - Updates countdown display                      |
++---------------------------------------------------+
+                          |
+                          v
++---------------------------------------------------+
+| Run server                                        |
+|  - app.run(debug=True, port=8050)                 |
++---------------------------------------------------+
+```
 - **Real‑time Updates**  
   - The dashboard auto‑refreshes every 30 seconds, pulling the latest aggregated sensor data from Cosmos DB.  
   - A countdown timer shows when the next refresh will occur, ensuring users know they’re seeing up‑to‑date skating conditions.  
