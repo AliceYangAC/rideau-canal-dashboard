@@ -15,10 +15,6 @@ The Rideau Canal Dashboard provides real‑time monitoring of skating conditions
 - **dotenv**: loads environment variables securely from `.env`.  
 - **pandas**: structures historical data into DataFrames for plotting.
 
-Here’s a structured section you can drop into your README for the **local setup of the dashboard**:
-
----
-
 ## Setup (Local)
 
 ### Prerequisites
@@ -83,8 +79,6 @@ If not handled in step 5 of "Deploy Web App":
 
 1. Click your project, likely named `rideau-canal-dashboard`
 2. **Settings -> Environment Variables -> Import.env -> Save**
-
-Here’s a concise section you can use in your README to highlight the dashboard features based on the attached script:
 
 ## Dashboard Features  
 
