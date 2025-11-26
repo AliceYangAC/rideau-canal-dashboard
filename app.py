@@ -32,6 +32,7 @@ CONTAINER_NAME = "SensorAggregations"
 BLOB_CONN_STR = os.getenv("BLOB_CONN_STR")
 BLOB_CONTAINER = "historical-data"
 
+# Helper functions to get Cosmos DB and Blob Storage clients
 def get_cosmos_container():
     client = CosmosClient(COSMOS_URL, COSMOS_KEY)
     db = client.get_database_client(DATABASE_NAME)
@@ -40,6 +41,9 @@ def get_cosmos_container():
 def get_blob_container():
     service = BlobServiceClient.from_connection_string(BLOB_CONN_STR)
     return service.get_container_client(BLOB_CONTAINER)
+
+# ---------------------------------
+# Data Retrieval Functions
 
 # Function to get latest aggregated status for a location from Cosmos DB
 def get_latest_status(location: str, minutes: int = 60):
@@ -82,6 +86,7 @@ def get_latest_status(location: str, minutes: int = 60):
     ))
     return items[0] if items else None
 
+# Function to get historical data from Blob Storage for the last hour
 def get_historical_data(last_minutes=60):
     blob_container = get_blob_container()
     now = datetime.datetime.now(datetime.timezone.utc)
@@ -108,7 +113,6 @@ app = dash.Dash(__name__)
 
 # Add server for deployment
 server = app.server 
-application = server
 
 # Used AI to enhance the dashboard's visual design and user experience.
 app.layout = html.Div(
@@ -151,7 +155,6 @@ def update_dashboard(n):
         metrics = get_latest_status(loc)
         if metrics:
             # Safety status badges
-            
             # Safe: Ice ≥ 30cm AND Surface Temp ≤ -2°C
             # Caution: Ice ≥ 25cm AND Surface Temp ≤ 0°C
             # Unsafe: All other conditions
