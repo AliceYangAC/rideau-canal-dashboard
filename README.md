@@ -105,10 +105,6 @@ Here’s a concise section you can use in your README to highlight the dashboard
     - **Unsafe** → All other conditions  
   - An overall system status summarizes skating conditions across all locations; if any location is not safe, it is declared overall unsafe.
 
-Here’s a **Troubleshooting FAQ** section you can add to your README, covering both **local** and **Vercel** deployment scenarios:
-
----
-
 ## Troubleshooting
 
 ### 1. The dashboard won’t start locally.
