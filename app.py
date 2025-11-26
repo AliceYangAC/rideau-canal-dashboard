@@ -22,8 +22,10 @@ load_dotenv(dotenv_path=os.path.join(BASE_DIR, ".env"))
 
 locations = ["Dow's Lake", "Fifth Avenue", "NAC"]
 
-# ---------------------------------
+# ---------------------------------------------
 # Azure Cosmos DB Setup & Blob Storage Setup
+# ---------------------------------------------
+
 COSMOS_URL = os.getenv("COSMOS_CONN_STR")
 COSMOS_KEY = os.getenv("COSMOS_KEY")
 DATABASE_NAME = "RideauCanalDB"
@@ -42,8 +44,9 @@ def get_blob_container():
     service = BlobServiceClient.from_connection_string(BLOB_CONN_STR)
     return service.get_container_client(BLOB_CONTAINER)
 
-# ---------------------------------
+# ---------------------------------------------
 # Data Retrieval Functions
+# ---------------------------------------------
 
 # Function to get latest aggregated status for a location from Cosmos DB
 def get_latest_status(location: str, minutes: int = 60):
@@ -107,14 +110,17 @@ def get_historical_data(last_minutes=60):
 
     return pd.DataFrame(records) if records else pd.DataFrame()
 
-# ---------------------------------
+# ---------------------------------------------
 # Dash App Setup
+# ---------------------------------------------
+
+# Initialize Dash app
 app = dash.Dash(__name__)
 
-# Add server for deployment
+# Expose Flask server for deployment
 server = app.server 
 
-# Used AI to enhance the dashboard's visual design and user experience.
+# Used AI to enhance the dashboard's visual design and user experience in the assets/style.css file.
 app.layout = html.Div(
     className="app-container",
     children=[
