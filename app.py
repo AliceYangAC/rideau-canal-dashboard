@@ -1,3 +1,6 @@
+from zoneinfo import ZoneInfo
+import json
+import os
 import dash
 from dash import dcc, html
 from dash.dependencies import Input, Output
@@ -7,8 +10,6 @@ import datetime
 import pandas as pd
 from azure.cosmos import CosmosClient
 from azure.storage.blob import BlobServiceClient
-import json
-import os
 
 # Real-time data display (3 location cards)
 # Safety status badges
@@ -176,14 +177,24 @@ def update_dashboard(n):
             else:
                 status = "Unsafe"
             statuses.append(status)
-            badge_color = "green" if status == "Safe" else "red"
+            if status == "Safe":
+                badge_color = "green"
+            elif status == "Caution":
+                badge_color = "orange"
+            else:
+                badge_color = "red"
+
 
             ts = metrics.get("timestamp")
             if ts:
-                # parse ISO string into datetime
+                # Parse ISO string into UTC datetime
                 dt = datetime.datetime.fromisoformat(ts.replace("Z", "+00:00"))
-                # format as yyyy-MM-DD hh:mm:ss AM/PM
-                formatted_ts = dt.strftime("%Y-%m-%d %I:%M:%S %p")
+
+                # Convert to Ottawa's timezone
+                dt_cst = dt.astimezone(ZoneInfo("America/Toronto"))
+
+                # Format as yyyy-MM-DD hh:mm:ss AM/PM
+                formatted_ts = dt_cst.strftime("%Y-%m-%d %I:%M:%S %p")
             else:
                 formatted_ts = "N/A"
 
