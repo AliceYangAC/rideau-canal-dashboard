@@ -271,4 +271,4 @@ def update_countdown(countdown_ticks, refresh_ticks):
     return f"Next refresh in {remaining} seconds"
 
 if __name__ == '__main__':
-    app.run(debug=True, port=int(os.getenv("PORT", 8050)))
+    app.run(debug=True, port=int(os.getenv("PORT", 8050)), host='0.0.0.0')
